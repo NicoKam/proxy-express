@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const fs = require("fs");
 const config = require("./config");
 const proxyMiddleWare = require("http-proxy-middleware");
 const app = express();
@@ -18,14 +19,19 @@ Object.keys(proxy).forEach((p) => {
 app.use(express.static(root));
 
 const addRedirectFile = (p = "") => {
-  app.get(p + "*", function (req, res) {
-    res.sendFile(path.resolve(root, p, "index.html"));
+  console.log(`listenning ${"/" +p + "*"}`)
+  app.get("/" +p + "*", function (req, res) {
+    const file = path.resolve(root,req.path.substr(1));
+    if(fs.exists(file))
+      res.sendFile(file);
+    else
+      res.sendFile(path.resolve(root, p, "index.html"));
   });
 };
 
 const { app: appList } = config;
 if (appList && appList.length > 0) {
-  appList.forEach(p => addRedirectFile(p + "/"));
+  appList.forEach(p => addRedirectFile( p + "/"));
 } else {
   addRedirectFile();
 }
