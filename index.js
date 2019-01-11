@@ -31,3 +31,4 @@ if (appList && appList.length > 0) {
 }
 
 app.listen(config.port);
+console.log("server started at http://127.0.0.1:" + config.port + "/");
