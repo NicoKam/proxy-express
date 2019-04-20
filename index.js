@@ -22,7 +22,7 @@ const addRedirectFile = (p = "") => {
   console.log(`listenning ${"/" +p + "*"}`)
   app.get("/" +p + "*", function (req, res) {
     const file = path.resolve(root,req.path.substr(1));
-    if(fs.exists(file))
+    if(fs.existsSync(file))
       res.sendFile(file);
     else
       res.sendFile(path.resolve(root, p, "index.html"));
