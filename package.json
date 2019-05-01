@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "start-https": "node index.js https",
+    "ssh-key": "openssl req -nodes -new -x509 -keyout server.key -out server.cert"
   },
   "author": "",
   "license": "ISC",
