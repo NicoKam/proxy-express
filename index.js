@@ -1,7 +1,9 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
-var https = require("https");
+const https = require("https");
+const compression = require("compression");
+
 
 const config = require("./config");
 const proxyMiddleWare = require("http-proxy-middleware");
@@ -18,6 +20,7 @@ const { proxy = {} } = config;
 Object.keys(proxy).forEach((p) => {
   app.use(p, proxyMiddleWare(proxy[p]));
 });
+app.use(compression());
 app.use(express.static(root));
 
 const addRedirectFile = (p = "") => {
