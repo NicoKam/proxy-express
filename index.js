@@ -8,6 +8,14 @@ const compression = require("compression");
 const config = require("./config");
 const proxyMiddleWare = require("http-proxy-middleware");
 const app = express();
+app.use((req, res, next) => {
+  if (req.path.indexOf("../") < 0) {
+    next();
+  } else {
+    res.status(404);
+    res.send("");
+  }
+});
 // const proxyOption = {
 //   target: config.target,
 //   changeOrigin: true,
